@@ -1,0 +1,3 @@
+[submodule "RAG-Gym"]
+	path = RAG-Gym
+	url = https://github.com/RAG-Gym/RAG-Gym.git
