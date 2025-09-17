@@ -38,6 +38,9 @@ class TestCriticAgentIntegration:
         best_action = agent.select_action(state, candidate_actions)
 
         print(f"\nChosen action: Query='{best_action.query}', Answer='{best_action.answer}'")
+        # Output:-
+        # Chosen action: Query='Alberto De Martino date of death', Answer='None'
+
         assert isinstance(best_action, Action)
         assert getattr(best_action, "query", None)
         assert "death" in best_action.query.lower()

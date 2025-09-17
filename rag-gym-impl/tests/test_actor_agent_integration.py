@@ -47,6 +47,13 @@ class TestActorAgentIntegration:
         query_text = " ".join([action.query.lower() for action in search_actions if action.query])
 
         print(f"\nGenerated search queries: {[action.query for action in search_actions]}")
+        # Example output:-
+        # Generated search queries: [
+        #     'Alberto De Martino date of death',
+        #     'Alberto De Martino obituary',
+        #     'Alberto De Martino Wikipedia',
+        #     'Alberto De Martino morto data di morte'
+        # ]
 
         assert "alberto de martino" in query_text, "Query should mention the director's name."
         assert ("death" in query_text or "died" in query_text), "Query should be about the director's death."
