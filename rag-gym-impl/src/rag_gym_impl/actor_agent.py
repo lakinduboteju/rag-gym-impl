@@ -30,7 +30,7 @@ class ActorAgent:
             "2. `Finish(answer: str)`: To conclude the research and provide a final answer. Only use this if you are confident you have enough information.\n\n"
             "You MUST format your response as a valid JSON list of objects. Do not include any other text, just the JSON.\n"
             "Example:\n"
-            "[\n  {\"action\": \"Search\", \"query\": \"specific details about topic X\"},\n  {\"action\": \"Finish\", \"answer\": \"The final answer is...\"}\n]"
+            "[\n  {{\"action\": \"Search\", \"query\": \"specific details about topic X\"}},\n  {{\"action\": \"Finish\", \"answer\": \"The final answer is...\"}}\n]"
         )
 
         prompt = ChatPromptTemplate.from_messages(

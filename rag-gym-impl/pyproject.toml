@@ -21,6 +21,11 @@ packages = [
 [tool.poetry.group.dev.dependencies]
 pytest = ">=8.0.0"
 
+[tool.pytest.ini_options]
+markers = [
+    'integration: marks tests that call external services (deselect with "-m "not integration"")',
+]
+
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
 build-backend = "poetry.core.masonry.api"
