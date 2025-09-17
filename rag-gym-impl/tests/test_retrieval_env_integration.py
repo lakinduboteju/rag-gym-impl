@@ -41,7 +41,7 @@ def ragflow_setup():
         print("Async parsing initiated, waiting for completion...")
 
         # Poll until parsing completes (adjust status field based on API)
-        for _ in range(30):  # ~30s max
+        for _ in range(6):  # ~30s max
             docs = dataset.list_documents(keywords="test_doc.txt")
             if all(getattr(doc, "run", "") == "DONE" for doc in docs):
                 break
