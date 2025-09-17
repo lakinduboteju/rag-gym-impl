@@ -18,6 +18,7 @@ A lightweight playground to prototype custom RAG-Gym-style agents using LLM call
 - Docker + Poetry setup for reproducible runs.
 - Actor agent implemented at `rag_gym_impl.actor_agent.ActorAgent` using LangChain + `gpt-5-mini` to generate candidate `Action`s.
 - Unit tests for Actor agent at `rag_gym-impl/tests/test_actor_agent.py` (mocked LLM calls, no external API).
+- Integration tests for Actor agent at `rag_gym-impl/tests/test_actor_agent_integration.py` (with external OpenAI API connection)
 
 ## Local development
 
@@ -50,7 +51,12 @@ Expected output is the JSON representation of a simple `State`.
 
 # Inside Docker container
 poetry install --no-root --no-interaction
+
+# Run all tests
 PYTHONPATH=/app/rag-gym-impl/src poetry run pytest
+
+# Run only integration tests
+PYTHONPATH=/app/rag-gym-impl/src poetry run pytest -m integration -sv
 ```
 
 ## Importing upstream modules
