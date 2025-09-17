@@ -58,7 +58,7 @@ class ActorAgent:
     based on the current problem-solving state.
     """
 
-    def __init__(self, model_name: str = "gpt-5-mini"):
+    def __init__(self, model_name: str = "gpt-5-nano"):
         """Initializes the Actor agent and its LangChain chain."""
         load_dotenv()
 
@@ -240,7 +240,7 @@ A lightweight playground to prototype custom RAG-Gym-style agents using LLM call
 - Minimal example that constructs a `State` using upstream code.
 - Centralized import helper (`rag_gym_impl.upstream`) to load upstream modules/symbols without installing the upstream package.
 - Docker + Poetry setup for reproducible runs.
-- Actor agent implemented at `rag_gym_impl.actor_agent.ActorAgent` using LangChain + `gpt-5-mini` to generate candidate `Action`s.
+- Actor agent implemented at `rag_gym_impl.actor_agent.ActorAgent` using LangChain + `gpt-5-nano` to generate candidate `Action`s.
 - Unit tests for Actor agent at `rag_gym-impl/tests/test_actor_agent.py` (mocked LLM calls, no external API).
 
 ## Local development

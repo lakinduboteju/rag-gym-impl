@@ -1,4 +1,4 @@
-The unit tests for the `ActorAgent` are passing, which confirms our internal logic is correct. Your next task is to write an **integration test** to validate the agent's real-world performance by making a live API call to the OpenAI `gpt-5-mini` model.
+The unit tests for the `ActorAgent` are passing, which confirms our internal logic is correct. Your next task is to write an **integration test** to validate the agent's real-world performance by making a live API call to the OpenAI `gpt-5-nano` model.
 
 The goal is to verify that the agent can reason correctly in a **multi-hop question-answering scenario**. You will create a new test file, use the Docker environment for execution, and follow the iterative "run, analyze, fix" cycle until the test passes successfully.
 

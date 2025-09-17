@@ -1,6 +1,6 @@
 Your primary task is to implement the **"Actor" agent** for our custom RAG-Gym project. First, gain context by reading the project goal in `@docs/1-goal.md` and the project structure in `@README.md`.
 
-The Actor's role is to generate candidate actions based on the current problem state. You will use **LangChain** to interface with the **GPT-5-mini** model and write comprehensive **unit tests** using Python's `unittest.mock` to ensure correctness without making live API calls.
+The Actor's role is to generate candidate actions based on the current problem state. You will use **LangChain** to interface with the **gpt-5-nano** model and write comprehensive **unit tests** using Python's `unittest.mock` to ensure correctness without making live API calls.
 
 Please follow these steps precisely.
 
@@ -79,7 +79,7 @@ class ActorAgent:
     An agent that uses an LLM to generate a set of candidate actions
     based on the current problem-solving state.
     """
-    def __init__(self, model_name: str = "gpt-5-mini"):
+    def __init__(self, model_name: str = "gpt-5-nano"):
         """Initializes the Actor agent and its LangChain chain."""
         load_dotenv()  # Loads OPENAI_API_KEY from .env file
 

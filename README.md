@@ -17,7 +17,7 @@ A lightweight playground to prototype custom RAG-Gym-style agents using LLM call
 - Centralized import helper (`rag_gym_impl.upstream`) to load upstream modules/symbols without installing the upstream package.
 - Docker + Poetry setup for reproducible runs.
 
-- Actor agent implemented at `rag_gym_impl.actor_agent.ActorAgent` using LangChain + `gpt-5-mini` to generate candidate `Action`s.
+- Actor agent implemented at `rag_gym_impl.actor_agent.ActorAgent` using LangChain + `gpt-5-nano` to generate candidate `Action`s.
 - Unit tests for Actor agent at `rag_gym-impl/tests/test_actor_agent.py` (mocked LLM calls, no external API).
 - Integration tests for Actor agent at `rag_gym-impl/tests/test_actor_agent_integration.py` (connecting to OpenAI API).
 

@@ -23,7 +23,7 @@ class CriticAgent:
     candidates, given the current problem-solving state.
     """
 
-    def __init__(self, model_name: str = "gpt-5-mini"):
+    def __init__(self, model_name: str = "gpt-5-nano"):
         """Initializes the Critic agent and its LangChain chain."""
         load_dotenv()
 
@@ -237,7 +237,7 @@ class CriticAgent:
     candidates, given the current problem-solving state.
     """
 
-    def __init__(self, model_name: str = "gpt-5-mini"):
+    def __init__(self, model_name: str = "gpt-5-nano"):
         """Initializes the Critic agent and its LangChain chain."""
         load_dotenv()
 
@@ -491,7 +491,7 @@ class CriticAgent:
     candidates, given the current problem-solving state.
     """
 
-    def __init__(self, model_name: str = "gpt-5-mini"):
+    def __init__(self, model_name: str = "gpt-5-nano"):
         """Initializes the Critic agent and its LangChain chain."""
         load_dotenv()
 

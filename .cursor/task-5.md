@@ -52,7 +52,7 @@ Once RAGFlow is running, you must perform two manual configuration steps in your
   * **Add OpenAI Model:**
 
       * Navigate to `https://localhost/user-setting/model` (you may need to accept a self-signed certificate warning).
-      * Add your OpenAI model details (e.g., `gpt-5-mini`) and provide your OpenAI API key.
+      * Add your OpenAI model details (e.g., `gpt-5-nano`) and provide your OpenAI API key.
 
   * **Generate RAGFlow API Key:**
 

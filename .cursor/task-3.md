@@ -67,7 +67,7 @@ class CriticAgent:
     An agent that uses an LLM to select the single best action from a list of
     candidates, given the current problem-solving state.
     """
-    def __init__(self, model_name: str = "gpt-5-mini"):
+    def __init__(self, model_name: str = "gpt-5-nano"):
         """Initializes the Critic agent and its LangChain chain."""
         load_dotenv()
 

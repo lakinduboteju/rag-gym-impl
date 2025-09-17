@@ -145,7 +145,7 @@ class ActorAgent:
     based on the current problem-solving state.
     """
 
-    def __init__(self, model_name: str = "gpt-5-mini"):
+    def __init__(self, model_name: str = "gpt-5-nano"):
         """Initializes the Actor agent and its LangChain chain."""
         load_dotenv()
 

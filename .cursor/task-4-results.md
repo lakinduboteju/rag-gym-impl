@@ -388,7 +388,7 @@ A lightweight playground to prototype custom RAG-Gym-style agents using LLM call
 - Minimal example that constructs a `State` using upstream code.
 - Centralized import helper (`rag_gym_impl.upstream`) to load upstream modules/symbols without installing the upstream package.
 - Docker + Poetry setup for reproducible runs.
-- Actor agent implemented at `rag_gym_impl.actor_agent.ActorAgent` using LangChain + `gpt-5-mini` to generate candidate `Action`s.
+- Actor agent implemented at `rag_gym_impl.actor_agent.ActorAgent` using LangChain + `gpt-5-nano` to generate candidate `Action`s.
 - Unit tests for Actor agent at `rag_gym-impl/tests/test_actor_agent.py` (mocked LLM calls, no external API).
 - Critic agent implemented at `rag_gym_impl.critic_agent.CriticAgent` selecting the best action from candidates.
 - Custom retrieval environment implemented at `rag_gym_impl.retrieval_env.RetrievalEnv` integrating with `ragflow-sdk`.
@@ -547,7 +547,7 @@ Once RAGFlow is running, you must perform two manual configuration steps in your
   * **Add OpenAI Model:**
 
       * Navigate to `https://localhost/user-setting/model` (you may need to accept a self-signed certificate warning).
-      * Add your OpenAI model details (e.g., `gpt-5-mini`) and provide your OpenAI API key.
+      * Add your OpenAI model details (e.g., `gpt-5-nano`) and provide your OpenAI API key.
 
   * **Generate RAGFlow API Key:**
 
