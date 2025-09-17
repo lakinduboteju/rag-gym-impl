@@ -14,8 +14,10 @@ A lightweight playground to prototype custom RAG-Gym-style agents using LLM call
 ## Current status
 
 - Minimal example that constructs a `State` using upstream code.
-- Centralized import helper (`rag_gym_impl.upstream`) that loads upstream modules and symbols from the submodule without importing the entire upstream package.
+- Centralized import helper (`rag_gym_impl.upstream`) to load upstream modules/symbols without installing the upstream package.
 - Docker + Poetry setup for reproducible runs.
+- Actor agent implemented at `rag_gym_impl.actor_agent.ActorAgent` using LangChain + `gpt-5-mini` to generate candidate `Action`s.
+- Unit tests for Actor agent at `rag_gym-impl/tests/test_actor_agent.py` (mocked LLM calls, no external API).
 
 ## Local development
 
@@ -36,10 +38,20 @@ Run the example inside the container:
 
 ```bash
 # from host
-docker exec rag-gym bash -lc 'cd /app/rag-gym-impl && poetry install --no-root --no-interaction && poetry run python src/rag_gym_impl/main.py'
+docker exec rag-gym bash -lc 'cd /app/rag-gym-impl && poetry install --no-root --no-interaction && PYTHONPATH=/app/rag-gym-impl/src poetry run python src/rag_gym_impl/main.py'
 ```
 
 Expected output is the JSON representation of a simple `State`.
+
+### Run tests
+
+```bash
+./docker-exec.sh
+
+# Inside Docker container
+poetry install --no-root --no-interaction
+PYTHONPATH=/app/rag-gym-impl/src poetry run pytest
+```
 
 ## Importing upstream modules
 
@@ -56,7 +68,6 @@ This loads `RAG-Gym/rag_gym/envs/state.py` directly from the submodule. As the p
 ## Roadmap
 
 - Integrate RAGFlow for retrieval and datasets, replacing upstream env.
-- Implement an LLM-driven action generator.
 - Implement an LLM-driven critic to promote actions.
 - Wire up the outer MDP loop with termination criteria and logging.
 - Add tests and a small end-to-end example.
