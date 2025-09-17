@@ -19,6 +19,9 @@ A lightweight playground to prototype custom RAG-Gym-style agents using LLM call
 - Actor agent implemented at `rag_gym_impl.actor_agent.ActorAgent` using LangChain + `gpt-5-mini` to generate candidate `Action`s.
 - Unit tests for Actor agent at `rag_gym-impl/tests/test_actor_agent.py` (mocked LLM calls, no external API).
 - Integration tests for Actor agent at `rag_gym-impl/tests/test_actor_agent_integration.py` (with external OpenAI API connection)
+- Critic agent implemented at `rag_gym_impl.actor_agent.CriticAgent` using LangChain + `gpt-5-mini` to select the best from candidate `Action`s.
+- Unit tests for Critic agent at `rag_gym-impl/tests/test_critic_agent.py` (mocked LLM calls, no external API).
+- Integration tests for Critic agent at `rag_gym-impl/tests/test_critic_agent_integration.py` (with external OpenAI API connection)
 
 ## Local development
 
@@ -57,6 +60,9 @@ PYTHONPATH=/app/rag-gym-impl/src poetry run pytest
 
 # Run only integration tests
 PYTHONPATH=/app/rag-gym-impl/src poetry run pytest -m integration -sv
+
+# Run only 1 test
+PYTHONPATH=/app/rag-gym-impl/src poetry run pytest -sv tests/test_critic_agent_integration.py
 ```
 
 ## Importing upstream modules
@@ -74,6 +80,5 @@ This loads `RAG-Gym/rag_gym/envs/state.py` directly from the submodule. As the p
 ## Roadmap
 
 - Integrate RAGFlow for retrieval and datasets, replacing upstream env.
-- Implement an LLM-driven critic to promote actions.
 - Wire up the outer MDP loop with termination criteria and logging.
 - Add tests and a small end-to-end example.
