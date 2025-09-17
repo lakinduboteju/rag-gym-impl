@@ -63,6 +63,11 @@ PYTHONPATH=/app/rag-gym-impl/src poetry run pytest -m integration -sv
 
 # Run only 1 test
 PYTHONPATH=/app/rag-gym-impl/src poetry run pytest -sv tests/test_critic_agent_integration.py
+
+# Debugging while running a test
+PYTHONPATH=/app/rag-gym-impl/src \
+poetry run python -Xfrozen_modules=off -m debugpy --listen 0.0.0.0:5678 --wait-for-client \
+-m pytest -sv tests/test_retrieval_env_integration.py
 ```
 
 ## Importing upstream modules
