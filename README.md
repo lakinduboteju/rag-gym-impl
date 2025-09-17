@@ -68,6 +68,8 @@ PYTHONPATH=$(pwd)/src poetry run pytest -sv tests/test_critic_agent_integration.
 PYTHONPATH=$(pwd)/src \
 poetry run python -Xfrozen_modules=off -m debugpy --listen 0.0.0.0:5678 --wait-for-client \
 -m pytest -sv tests/test_retrieval_env_integration.py
+# Use VS Code to connect debug client to the debugpy server running on Docker container
+# Use .vscode/launch.json
 ```
 
 ## Importing upstream modules
