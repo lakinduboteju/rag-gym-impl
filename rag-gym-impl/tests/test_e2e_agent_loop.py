@@ -43,18 +43,16 @@ def e2e_ragflow_setup():
 
         dataset.upload_documents(docs_to_upload)
 
-        # List uploaded documents to get their IDs
         docs = dataset.list_documents()
         doc_ids = [doc.id for doc in docs]
 
-        # Trigger async parsing
         dataset.async_parse_documents(doc_ids)
         print("Async parsing initiated, waiting for completion...")
 
-        # Poll until parsing completes
-        for _ in range(6):  # up to ~30s
+        for _ in range(6):
             docs = dataset.list_documents()
             if all(getattr(doc, "run", "") == "DONE" for doc in docs):
+                print("All documents parsed successfully.")
                 break
             time.sleep(5)
         else:
@@ -81,18 +79,51 @@ class TestEndToEndAgentLoop:
         env = RetrievalEnv(dataset_ids=[dataset_id], max_iter=3)
 
         question = "What is the date of death of the director of the film Holocaust 2000?"
+        print(f"Question: {question}")
         state, _ = env.reset(question=question)
 
         for i in range(env.max_iter):
-            print(f"\n----- LOOP {i+1} -----")
+            print(f"\n================================== LOOP {i+1} ==================================")
+            print(f"Current State History ({len(state.history)} turn(s)):")
+            if not state.history:
+                print("  [No history yet]")
+            else:
+                for idx, turn in enumerate(state.history):
+                    print(f"  Turn {idx+1}:")
+                    print(f"    Query: {turn.get('query')}")
+                    print(f"    Docs: {turn.get('documents')}")
+
+            # Actor generates actions
             candidate_actions = actor.generate_actions(state)
-            print(f"Actor generated {len(candidate_actions)} actions.")
+            print("\n--- Actor: Generated Actions ---")
+            for j, action in enumerate(candidate_actions):
+                if action.query:
+                    print(f"  [{j+1}] Search: '{action.query}'")
+                elif action.answer:
+                    print(f"  [{j+1}] Finish: '{action.answer}'")
 
+            # Critic selects the best action
             best_action = critic.select_action(state, candidate_actions)
-            print(f"Critic selected action: Query='{best_action.query}', Answer='{best_action.answer}'")
+            print("\n--- Critic: Selected Action ---")
+            if best_action.query:
+                print(f"  Search: '{best_action.query}'")
+            elif best_action.answer:
+                print(f"  Finish: '{best_action.answer}'")
 
+            # Environment executes the action and retrieves documents
             state, terminated, truncated, _ = env.step(best_action)
 
+            # Print retrieved documents if a search was performed
+            if best_action.query and len(state.history) > i:
+                print("\n--- Environment: Retrieved Documents ---")
+                retrieved_docs = state.history[-1].get("documents", [])
+                if not retrieved_docs:
+                    print("  [No documents were retrieved]")
+                else:
+                    for k, doc in enumerate(retrieved_docs):
+                        print(f"  Doc [{k+1}]: \"{doc}\"")
+
+            # Assertions to verify progress
             if i == 0 and len(state.history) > 0:
                 assert "alberto de martino" in state.history[0]["documents"][0].lower()
 
@@ -102,14 +133,57 @@ class TestEndToEndAgentLoop:
                     pytest.skip("Dataset not fully indexed for death date; skipping E2E after partial progress.")
 
             if terminated or truncated:
-                print("Loop terminated or truncated.")
+                print(f"\nLoop {'terminated' if terminated else 'truncated'}.")
                 break
-
+        
+        print("\n=============================== FINAL RESULT ===============================")
         print(f"Final Answer from state: {state.answer}")
+        
         if state.answer is None:
             pytest.skip("Agent did not finalize within max_iter. Skipping strict final assertions.")
+            
         final_answer = state.answer.lower()
         assert "alberto de martino" in final_answer
         assert "2015" in final_answer
 
+# Example output:-
+"""
+Question: What is the date of death of the director of the film Holocaust 2000?
 
+================================== LOOP 1 ==================================
+Current State History (0 turn(s)):
+  [No history yet]
+
+--- Actor: Generated Actions ---
+  [1] Search: 'Holocaust 2000 film director'
+  [2] Search: 'Holocaust 2000 director biography death date'
+  [3] Search: '"Holocaust 2000" film director obituary'
+  [4] Search: 'Holocaust 2000 IMDb director'
+
+--- Critic: Selected Action ---
+  Search: 'Holocaust 2000 IMDb director'
+
+--- Environment: Retrieved Documents ---
+  Doc [1]: "Holocaust 2000 is a 1977 horror film directed by the Italian filmmaker Alberto De Martino."
+  Doc [2]: "Alberto De Martino (12 June 1929 – 31 October 2015) was a prolific director of genre films."
+
+================================== LOOP 2 ==================================
+Current State History (1 turn(s)):
+  Turn 1:
+    Query: Holocaust 2000 IMDb director
+    Docs: ['Holocaust 2000 is a 1977 horror film directed by the Italian filmmaker Alberto De Martino.', 'Alberto De Martino (12 June 1929 – 31 October 2015) was a prolific director of genre films.']
+
+--- Actor: Generated Actions ---
+  [1] Finish: 'The director Alberto De Martino died on 31 October 2015.'
+  [2] Search: 'Alberto De Martino death date obituary'
+  [3] Search: 'Alberto De Martino Holocaust 2000 director filmography'
+  [4] Search: 'Alberto De Martino obituary 2015 Italian director'
+
+--- Critic: Selected Action ---
+  Finish: 'The director Alberto De Martino died on 31 October 2015.'
+
+Loop terminated.
+
+=============================== FINAL RESULT ===============================
+Final Answer from state: The director Alberto De Martino died on 31 October 2015.
+"""
