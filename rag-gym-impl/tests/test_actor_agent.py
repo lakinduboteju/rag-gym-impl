@@ -26,7 +26,7 @@ class TestActorAgent(unittest.TestCase):
         self.agent.chain = MagicMock()
         self.agent.chain.invoke.return_value = mock_llm_output
 
-        # Build input state with history
+        # Build a state with history
         question = "llama vs alpaca"
         history = History()
         history.add_qd(

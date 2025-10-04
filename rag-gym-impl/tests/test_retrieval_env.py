@@ -12,7 +12,7 @@ class TestRetrievalEnv(unittest.TestCase):
 
     def test_step_with_search_action(self, MockRAGFlow: MagicMock):
         mock_client = MockRAGFlow.return_value
-        mock_client.retrieve.return_value = [MagicMock(content_str="mocked doc 1")]
+        mock_client.retrieve.return_value = [MagicMock(content="mocked doc chunk 1")]
 
         env = RetrievalEnv(dataset_ids=["test_id"])
         state, _ = env.reset(question="test question")
@@ -26,7 +26,7 @@ class TestRetrievalEnv(unittest.TestCase):
             top_k=5,
         )
         self.assertEqual(len(next_state.history), 1)
-        self.assertEqual(next_state.history[0]["documents"], ["mocked doc 1"])
+        self.assertEqual(next_state.history[0]["documents"], ["mocked doc chunk 1"])
         self.assertFalse(terminated)
         self.assertFalse(truncated)
 
